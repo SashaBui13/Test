@@ -1,60 +1,53 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@model List<Product>
 <div class="text-center">
     <h1 class="display-4">Add new product to the list</h1>
-    <form>
-        <p>
-        <div class="input-group">
-            <span class="input-group-text">Name of product</span>
-            <input type="text" aria-label="Name" class="form-control">
-        </div>
-        </p>
-        <p>
-        <div class="input-group">
-            <span class="input-group-text">Product price</span>
-            <input type="number" aria-label="Price" class="form-control">
-        </div>
-        </p>
+    <p>@Model.First().Name</p>
+    <form asp-controller="Home" asp-action="AddProduct" method="post"> 
         <p>
             <div class="input-group">
-            <span class="input-group-text">Describe of product</span>
-            <input type="text" aria-label="Describe" class="form-control">
+                <span class="input-group-text">Name of product</span>
+                <input name="ProductName" type="text" aria-label="Name" class="form-control">
             </div>
         </p>
         <p>
-            <input class="btn btn-primary" type="button" value="Save">
+            <div class="input-group">
+                <span class="input-group-text">Product price</span>
+                <input name="ProductPrice" type="number" aria-label="Price" class="form-control">
+            </div>
         </p>
-        </form>
-        <table class="table">
-            <thead>
+        <p>
+            <div class="input-group">
+                <span class="input-group-text">Describe of product</span>
+                <input  name="ProductDescription" type="text" aria-label="Describe" class="form-control">
+            </div>
+        </p>
+        <p>
+            <input class="btn btn-primary" type="submit" value="Save">
+        </p>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Describe</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Describe</th>
+                    <th scope="row">@product.Id</th>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.Description</td>
                 </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Computer</td>
-                    <td>10</td>
-                    <td>Digital Technics</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Mouse</td>
-                    <td>36</td>
-                    <td>Digital Technics</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Keyboard</td>
-                    <td>13</td>
-                    <td>Digital Technics</td>
-                </tr>
+            }
+                
             </tbody>
         </table>
 </div>
