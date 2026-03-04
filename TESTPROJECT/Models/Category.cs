@@ -8,5 +8,6 @@
 
         public string Description { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public List<Product> products = new List<Product>();
     }
 }
