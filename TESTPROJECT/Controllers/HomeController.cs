@@ -22,7 +22,7 @@ namespace YourProjectName.Controllers
         public IActionResult AddProduct(string ProductName, int ProductPrice, string ProductDescription)
         {
             var product = new Product();
-
+            //
 
             product.Name = ProductName;
             product.Price = ProductPrice;
@@ -36,6 +36,7 @@ namespace YourProjectName.Controllers
             return RedirectToAction("Index");
         }
 
+       
         
         public IActionResult Delete(int id)
         {
