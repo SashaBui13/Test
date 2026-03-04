@@ -35,5 +35,18 @@ namespace YourProjectName.Controllers
 
             return RedirectToAction("Index");
         }
+
+        
+        public IActionResult Delete(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product == null)
+            {
+                return View("Error");
+            }
+            product.IsDeleted= true;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

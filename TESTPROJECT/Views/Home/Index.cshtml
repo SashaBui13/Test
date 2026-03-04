@@ -4,7 +4,6 @@
 @model List<Product>
 <div class="text-center">
     <h1 class="display-4">Add new product to the list</h1>
-    <p>@Model.First().Name</p>
     <form asp-controller="Home" asp-action="AddProduct" method="post"> 
         <p>
             <div class="input-group">
@@ -35,18 +34,25 @@
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
                 <th scope="col">Describe</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var product in Model)
             {
+                @if(product.IsDeleted == false)
+                {
                 <tr>
+
                     <th scope="row">@product.Id</th>
                     <td>@product.Name</td>
                     <td>@product.Price</td>
                     <td>@product.Description</td>
+                    <td><a type="button" asp-controller="Home" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-outline-danger">Delete</a></td>
                 </tr>
+                }
             }
+
                 
             </tbody>
         </table>
