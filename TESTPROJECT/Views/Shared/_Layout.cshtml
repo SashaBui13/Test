@@ -35,6 +35,10 @@
 
                         @if (User.IsInRole("Admin"))
                         {
+                            <button class="btn btn-light" onclick="toggleMenu()">
+                                AdminPanel
+                            </button>
+
                             <a asp-area=""
                             asp-controller="Home"
                             asp-action="Product"
