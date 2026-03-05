@@ -39,9 +39,50 @@ namespace YourProjectName.Controllers
 
             return RedirectToAction("Index");
         }
+        public IActionResult Edit(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product == null)
+                return NotFound();
 
-       
-        
+            var viewModel = new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                Categories = _context.Categories
+                                     .Where(c => !c.IsDeleted)
+                                     .ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Categories = _context.Categories.ToList();
+                return View(model);
+            }
+
+            var product = _context.Products.Find(model.Id);
+            if (product == null)
+                return NotFound();
+
+            product.Name = model.Name;
+            product.Price = model.Price;
+            product.Description = model.Description;
+            product.CategoryId = model.CategoryId;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Delete(int id)
         {
             var product = _context.Products.Find(id);

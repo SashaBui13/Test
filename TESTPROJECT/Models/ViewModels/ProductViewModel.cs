@@ -4,5 +4,10 @@
     {
         public List<Product> Products { get; set; } = new List<Product>();
         public List<Category> Categories { get; set; } = new List<Category>();
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Price { get; set; }
+        public string Description { get; set; }
+        public int CategoryId { get; set; }
     }
 }
