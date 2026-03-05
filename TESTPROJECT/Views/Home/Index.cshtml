@@ -99,7 +99,8 @@
 							<a asp-controller="Home"
 							   asp-action="Delete"
 							   asp-route-id="@product.Id"
-							   class="btn btn-outline-danger btn-sm">
+							   class="btn btn-outline-danger btn-sm"
+							   onclick="return confirm('Ви впевнені що хочете видалити цей продукт?');">
 								Delete
 							</a>
 						</div>
