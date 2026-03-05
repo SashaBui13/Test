@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using TESTPROJECT.Data;
@@ -6,6 +7,7 @@ using TESTPROJECT.Models.ViewModels;
 
 namespace YourProjectName.Controllers
 {
+    
     public class HomeController : Controller
     {
         public ApplicationDbContext _context;
@@ -27,6 +29,7 @@ namespace YourProjectName.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddProduct(string ProductName, int ProductPrice, string ProductDescription, int CategoryId)
         {
             var product = new Product();
@@ -43,6 +46,7 @@ namespace YourProjectName.Controllers
 
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var product = _context.Products.Find(id);
@@ -64,6 +68,7 @@ namespace YourProjectName.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(ProductViewModel model)
         {
             if (!ModelState.IsValid)
@@ -85,7 +90,7 @@ namespace YourProjectName.Controllers
 
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var product = _context.Products.Find(id);
