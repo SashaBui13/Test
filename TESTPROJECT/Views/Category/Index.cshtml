@@ -67,7 +67,8 @@
                             <a asp-controller="Category"
                                asp-action="Delete"
                                asp-route-id="@category.Id"
-                               class="btn btn-outline-danger btn-sm">
+                               class="btn btn-outline-danger btn-sm"
+                               onclick="return confirm('Ви впевнені що хочете видалити цю категорію?');">
                                 Delete
                             </a>
                         </div>
