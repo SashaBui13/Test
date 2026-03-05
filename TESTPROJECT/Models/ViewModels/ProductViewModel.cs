@@ -1,4 +1,6 @@
-﻿namespace TESTPROJECT.Models.ViewModels
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace TESTPROJECT.Models.ViewModels
 {
     public class ProductViewModel
     {
@@ -9,5 +11,7 @@
         public int Price { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
+
     }
 }
+

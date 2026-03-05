@@ -62,7 +62,14 @@
                                 @category.Description
                             </p>
                         </div>
-
+                        <div class="card-footer bg-white border-0 text-end">
+                            <a asp-controller="Category"
+                               asp-action="Edit"
+                               asp-route-id="@category.Id"
+                               class="btn btn-outline-primary btn-sm me-2">
+                                Edit
+                            </a>
+                        </div>
                         <div class="card-footer bg-white border-0 text-end">
                             <a asp-controller="Category"
                                asp-action="Delete"
