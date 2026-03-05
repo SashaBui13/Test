@@ -1,24 +1,26 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
 using TESTPROJECT.Data;
 using TESTPROJECT.Models;
 using TESTPROJECT.Models.ViewModels;
+using System.Linq;
 
 namespace YourProjectName.Controllers
 {
-    
     public class HomeController : Controller
     {
         public ApplicationDbContext _context;
+
         public HomeController(ApplicationDbContext context)
         {
             _context = context;
         }
+
         public IActionResult Privacy()
         {
             return View();
         }
+
         public IActionResult Index()
         {
             var products = _context.Products.ToList();
@@ -32,6 +34,7 @@ namespace YourProjectName.Controllers
 
             return View(model);
         }
+
         public IActionResult RemovedProducts()
         {
             var products = _context.Products.ToList();
@@ -45,12 +48,13 @@ namespace YourProjectName.Controllers
 
             return View(model);
         }
+
         public IActionResult Product()
         {
             var allProducts = _context.Products.ToList();
             var allCategories = _context.Categories.ToList();
 
-            var model = new ProductViewModel { Categories = allCategories , Products = allProducts};
+            var model = new ProductViewModel { Categories = allCategories, Products = allProducts };
             return View(model);
         }
 
@@ -58,26 +62,26 @@ namespace YourProjectName.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult AddProduct(string ProductName, int ProductPrice, string ProductDescription, int CategoryId)
         {
-            var product = new Product();
-            //
-
-            product.Name = ProductName;
-            product.Price = ProductPrice;
-            product.Description = ProductDescription;
-            product.CategoryId = CategoryId;
+            var product = new Product
+            {
+                Name = ProductName,
+                Price = ProductPrice,
+                Description = ProductDescription,
+                CategoryId = CategoryId
+            };
 
             _context.Products.Add(product);
             _context.SaveChanges();
 
-
             return RedirectToAction("Index");
         }
+
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var product = _context.Products.Find(id);
-            if (product == null)
-                return NotFound();
+            if (product == null) return NotFound();
+
             var viewModel = new ProductViewModel
             {
                 Id = product.Id,
@@ -85,9 +89,7 @@ namespace YourProjectName.Controllers
                 Price = product.Price,
                 Description = product.Description,
                 CategoryId = product.CategoryId,
-                Categories = _context.Categories
-                                     .Where(c => !c.IsDeleted)
-                                     .ToList()
+                Categories = _context.Categories.Where(c => !c.IsDeleted).ToList()
             };
 
             return View(viewModel);
@@ -104,8 +106,7 @@ namespace YourProjectName.Controllers
             }
 
             var product = _context.Products.Find(model.Id);
-            if (product == null)
-                return NotFound();
+            if (product == null) return NotFound();
 
             product.Name = model.Name;
             product.Price = model.Price;
@@ -116,18 +117,18 @@ namespace YourProjectName.Controllers
 
             return RedirectToAction("Index");
         }
+
         [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var product = _context.Products.Find(id);
-            if (product == null)
-            {
-                return View("Error");
-            }
-            product.IsDeleted= true;
+            if (product == null) return View("Error");
+
+            product.IsDeleted = true;
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
         public IActionResult DeleteTotal(int id)
         {
             var product = _context.Products.Find(id);
@@ -136,16 +137,14 @@ namespace YourProjectName.Controllers
                 _context.Products.Remove(product);
                 _context.SaveChanges();
             }
-
             return RedirectToAction("Index");
         }
+
         public IActionResult ToSell(int id)
         {
             var product = _context.Products.Find(id);
-            if (product == null)
-            {
-                return View("Error");
-            }
+            if (product == null) return View("Error");
+
             product.IsDeleted = false;
             _context.SaveChanges();
             return RedirectToAction("Index");
