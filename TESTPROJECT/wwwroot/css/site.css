@@ -20,3 +20,38 @@ html {
 body {
   margin-bottom: 60px;
 }
+.contact-menu {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 300px;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 1000;
+}
+
+    .contact-menu h5 {
+        margin-top: 10px;
+    }
+.support-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 0;
+    color: #2b6cff;
+}
+.support-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+    .support-item:hover {
+        background: #f3f3f3;
+    }
