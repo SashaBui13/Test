@@ -26,7 +26,6 @@ namespace YourProjectName.Controllers
         public IActionResult AddProduct(string ProductName, int ProductPrice, string ProductDescription, int CategoryId)
         {
             var product = new Product();
-            //
 
             product.Name = ProductName;
             product.Price = ProductPrice;
