@@ -21,6 +21,32 @@ namespace YourProjectName.Controllers
         }
         public IActionResult Index()
         {
+            var products = _context.Products.ToList();
+            var categories = _context.Categories.ToList();
+
+            var model = new ProductViewModel
+            {
+                Products = products,
+                Categories = categories
+            };
+
+            return View(model);
+        }
+        public IActionResult RemovedProducts()
+        {
+            var products = _context.Products.ToList();
+            var categories = _context.Categories.ToList();
+
+            var model = new ProductViewModel
+            {
+                Products = products,
+                Categories = categories
+            };
+
+            return View(model);
+        }
+        public IActionResult Product()
+        {
             var allProducts = _context.Products.ToList();
             var allCategories = _context.Categories.ToList();
 
@@ -99,6 +125,28 @@ namespace YourProjectName.Controllers
                 return View("Error");
             }
             product.IsDeleted= true;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public IActionResult DeleteTotal(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+        public IActionResult ToSell(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product == null)
+            {
+                return View("Error");
+            }
+            product.IsDeleted = false;
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

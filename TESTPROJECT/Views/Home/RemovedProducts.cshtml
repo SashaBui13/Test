@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model TESTPROJECT.Models.ViewModels.ProductViewModel
+
+<div class="container py-5">
+
+    <div class="row g-4">
+        @if (Model?.Products != null)
+        {
+            @foreach (var product in Model.Products)
+            {
+                @if (product.IsDeleted != false)
+                {
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow border-0">
+
+                            <div class="card-header text-white"
+                                 style="background-color:#6f42c1;">
+                                <h5 class="card-title mb-0">@product.Name</h5>
+                            </div>
+                            <div class="card-body bg-white">
+                                <h6 class="card-subtitle mb-2">Category: @Model.Categories.Where(c => c.Id == product.CategoryId).First().Name</h6>
+                            </div>
+
+                            <div class="card-body bg-white">
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    ID: @product.Id
+                                </h6>
+
+                                <p class="card-text">
+                                    <strong>Price:</strong>
+                                    <span class="text-success">@product.Price ₴</span>
+                                </p>
+
+                                <p class="card-text">
+                                    @product.Description
+                                </p>
+                            </div>
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="card-footer bg-white border-0 text-end">
+                                    <a asp-controller="Home"
+                                       asp-action="ToSell"
+                                       asp-route-id="@product.Id"
+                                       class="btn btn-outline-success btn-sm me-2">
+                                        To Sell
+                                    </a>
+                                </div>
+
+                                <div class="card-footer bg-white border-0 text-end">
+                                    <a asp-controller="Home"
+                                       asp-action="Edit"
+                                       asp-route-id="@product.Id"
+                                       class="btn btn-outline-primary btn-sm me-2">
+                                        Edit
+                                    </a>
+                                </div>
+
+                                <div class="card-footer bg-white border-0 text-end">
+                                    <a asp-controller="Home"
+                                       asp-action="DeleteTotal"
+                                       asp-route-id="@product.Id"
+                                       class="btn btn-outline-danger btn-sm"
+                                       onclick="return confirm('Ви впевнені що хочете видалити цей продукт?');">
+                                        Delete
+                                    </a>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+
+</div>
