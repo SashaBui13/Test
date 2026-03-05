@@ -13,6 +13,10 @@ namespace YourProjectName.Controllers
         {
             _context = context;
         }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             var allProducts = _context.Products.ToList();

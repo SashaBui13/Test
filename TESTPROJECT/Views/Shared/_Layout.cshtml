@@ -26,15 +26,21 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-                    <div class="d-flex">
+                    <div class="d-flex gap-2">
+                        <a asp-area=""
+                           asp-controller="Home"
+                           asp-action="Index"
+                           class="btn btn-light fw-semibold">
+                            Products
+                        </a>
+
                         <a asp-area=""
                            asp-controller="Category"
                            asp-action="Index"
-                           class="btn btn-light fw-semibold ms-auto">
+                           class="btn btn-light fw-semibold">
                             Categories
                         </a>
                     </div>
-                </div>
             </div>
         </nav>
     </header>
