@@ -44,7 +44,6 @@ namespace YourProjectName.Controllers
             var product = _context.Products.Find(id);
             if (product == null)
                 return NotFound();
-
             var viewModel = new ProductViewModel
             {
                 Id = product.Id,

@@ -1,0 +1,17 @@
+﻿@model TESTPROJECT.Models.ViewModels.CategoryViewModel
+
+<form asp-action="Edit" method="post">
+    <input asp-for="categoryId" hidden />
+
+    <div class="mb-3">
+        <label asp-for="categoryName"></label>
+        <input asp-for="categoryName" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="categoryDescription"></label>
+        <input asp-for="categoryDescription" class="form-control" required />
+    </div>
+    <div class="mb-3">
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
