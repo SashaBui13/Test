@@ -4,9 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Product Shop</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TESTPROJECT.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/bootstrap-icons/bootstrap-icons.min.css" />
 </head>
 <body>
     <header>
@@ -26,32 +28,31 @@
                     <div class="d-flex align-items-center gap-4">
                         <partial name="_LoginPartial" />
 
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <div class="d-flex align-items-center gap-2">
-                                <a asp-controller="Home" asp-action="Product" class="btn btn-light fw-bold">Товари</a>
-                                <a asp-controller="Category" asp-action="Index" class="btn btn-light fw-bold">Категорії</a>
-                                <a asp-controller="Home" asp-action="RemovedProducts" class="btn btn-outline-light fw-bold">Архів</a>
-                            </div>
-                        }
+                        <div class="d-flex align-items-center gap-2">
+                            <a asp-controller="Home" asp-action="Product" class="btn btn-light fw-bold">Товари</a>
+                            <a asp-controller="Category" asp-action="Index" class="btn btn-light fw-bold">Категорії</a>
+                            <a asp-controller="Home" asp-action="RemovedProducts" class="btn btn-outline-light fw-bold">Архів</a>
+                        </div>
 
-                        <div class="position-relative">
-                            <button class="btn btn-light fw-bold" onclick="toggleMenu()">
-                                📞 Контакти
+                        <div class="position-relative d-inline-block">
+                            <button class="btn btn-light fw-bold" onclick="toggleMenu(event)">
+                                <i class="bi bi-telephone-fill me-1"></i> Контакти
                             </button>
 
                             <div id="contactMenu" class="contact-menu">
                                 <h5 class="text-danger border-bottom pb-3 mb-3">Контакти</h5>
                                 <p class="mb-2 fs-5">0 (988) 114-761</p>
-                                <p class="text-primary fw-bold fs-5">📞 +38 (068) 426-86-42</p>
+                                <p class="text-primary fw-bold fs-5">
+                                    <i class="bi bi-telephone-inbound-fill me-2"></i> +38 (068) 426-86-42
+                                </p>
                                 <hr class="my-4">
                                 <div class="dropdown">
                                     <button class="btn btn-outline-dark w-100 dropdown-toggle fw-bold py-2" type="button" data-bs-toggle="dropdown">
                                         Підтримка
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                                        <li><a class="dropdown-item py-2" href="https://t.me/sashacpp" target="_blank">Telegram</a></li>
-                                        <li><a class="dropdown-item py-2" href="https://wa.me/380988114761" target="_blank">WhatsApp</a></li>
+                                        <li><a class="dropdown-item py-2" href="https://t.me/sashacpp" target="_blank"><i class="bi bi-telegram me-2 text-primary"></i>Telegram</a></li>
+                                        <li><a class="dropdown-item py-2" href="https://wa.me/380988114761" target="_blank"><i class="bi bi-whatsapp me-2 text-success"></i>WhatsApp</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -70,20 +71,26 @@
         </div>
     </div>
 
-    <footer class="footer py-4">
-        <div class="container text-center">
-            <span class="text-white">&copy; 2026 - Product Shop - <a class="text-white-50 text-decoration-none" asp-controller="Home" asp-action="Privacy">Privacy</a></span>
-        </div>
-    </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
-        function toggleMenu() {
+        function toggleMenu(event) {
+            event.stopPropagation();
             const menu = document.getElementById('contactMenu');
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('contactMenu');
+            const isClickInside = menu.contains(event.target);
+            const isButton = event.target.closest('.btn-light');
+
+            if (!isClickInside && !isButton && menu.style.display === 'block') {
+                menu.style.display = 'none';
+            }
+        });
     </script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -7,6 +7,7 @@
         public string Name { get; set; }
 
         public string Description { get; set; }
+        public string? ImageUrl { get; set; }
         public bool IsDeleted { get; set; } = false;
         public List<Product> products = new List<Product>();
     }

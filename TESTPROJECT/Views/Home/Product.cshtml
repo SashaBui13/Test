@@ -1,55 +1,78 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Управління товарами";
 }
 @model TESTPROJECT.Models.ViewModels.ProductViewModel
 
 <div class="container py-5">
 
-    @if (User.IsInRole("Admin"))
-    {
+    @*@if (User.IsInRole("Admin"))
+    {*@
         <div class="row justify-content-center mb-5">
-            <div class="col-md-6">
-                <div class="card shadow-lg border-0">
-                    <div class="card-header text-white text-center"
-                         style="background: linear-gradient(135deg, #6f42c1, #a855f7);">
-                        <h3 class="mb-0">Add New Product</h3>
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0" style="border-radius: 15px;">
+                    <div class="card-header text-white text-center" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); border-radius: 15px 15px 0 0;">
+                        <h3 class="mb-0 fw-bold py-2">Додати новий товар</h3>
                     </div>
-                    <div class="card-body bg-white">
+                    <div class="card-body p-4 bg-white">
                         <form asp-controller="Home" asp-action="AddProduct" method="post" enctype="multipart/form-data">
                             <div asp-validation-summary="All" class="text-danger mb-3"></div>
-                            <div class="form-floating mb-3">
-                                <input name="ProductName" type="text" class="form-control" placeholder="Product Name" required>
-                                <label>Product Name</label>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input name="ProductName" type="text" class="form-control" placeholder="Назва товару" required>
+                                        <label>Назва товару</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input name="ProductPrice" type="number" min="0" step="1" class="form-control" placeholder="Ціна" required>
+                                        <label>Ціна (₴)</label>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="form-check form-switch mb-4 ms-1">
+                                <input name="IsAvailable" class="form-check-input" type="checkbox" id="flexSwitchCheckAvailable" value="true" checked style="cursor: pointer; transform: scale(1.2);">
+                                <label class="form-check-label fw-bold ms-2" for="flexSwitchCheckAvailable" style="cursor: pointer;">Товар в наявності (за замовчуванням)</label>
+                            </div>
+
                             <div class="form-floating mb-3">
-                                <input name="ProductPrice" type="number" min="0" step="1" class="form-control" placeholder="Price" required>
-                                <label>Product Price</label>
+                                <input name="ProductDescription" type="text" class="form-control" placeholder="Короткий опис" required>
+                                <label>Короткий опис (для картки)</label>
                             </div>
 
                             <div class="form-floating mb-4">
-                                <input name="ProductDescription" type="text" class="form-control" placeholder="Description" required>
-                                <label>Product Description</label>
+                                <textarea name="LongDescription" class="form-control" placeholder="Детальний опис" style="height: 150px"></textarea>
+                                <label>Детальний опис (для сторінки товару)</label>
                             </div>
-                            <div class="form-floating mb-4">
-                                <select class="form-select" name="CategoryId" required aria-label="Default select example">
-                                    @foreach (var category in Model.Categories)
-                                    {
-                                        @if (!category.IsDeleted)
-                                        {
-                                            <option value="@category.Id">@category.Name</option>
-                                        }
-                                    }
-                                </select>
-                                <label>Select Product Category</label>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-select" name="CategoryId" required>
+                                            @foreach (var category in Model.Categories)
+                                            {
+                                                @if (!category.IsDeleted)
+                                                {
+                                                    <option value="@category.Id">@category.Name</option>
+                                                }
+                                            }
+                                        </select>
+                                        <label>Категорія товару</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold text-muted mb-1" style="font-size: 0.9rem;">Фото товару</label>
+                                        <input name="ImageFile" type="file" class="form-control" accept="image/*">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Фото товару</label>
-                                <input name="ImageFile" type="file" class="form-control" accept="image/*">
-                            </div>
-                            <div class="d-grid">
-                                <button class="btn text-white"
-                                        style="background-color:#6f42c1;">
-                                    Save Product
+
+                            <div class="d-grid mt-2">
+                                <button type="submit" class="btn text-white fw-bold py-3" style="background-color:#6f42c1; border-radius: 10px; font-size: 1.1rem;">
+                                    <i class="fa-solid fa-plus me-2"></i>Зберегти товар
                                 </button>
                             </div>
 
@@ -58,68 +81,72 @@
                 </div>
             </div>
         </div>
-    }
+    @*}*@
 
-
+    <h3 class="fw-bold mb-4 mt-5" style="color: var(--deep-bg);">Список існуючих товарів</h3>
     <div class="row g-4">
-        @foreach (var product in Model.Products)
+        @if (Model?.Products != null)
         {
-            @if (product.IsDeleted == false)
+            @foreach (var product in Model.Products)
             {
-                <div class="col-md-4">
-                    <div class="card h-100 shadow border-0">
+                @if (product.IsDeleted == false)
+                {
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 item-card shadow-sm d-flex flex-column">
 
-                        <div class="card-header text-white"
-                             style="background-color:#6f42c1;">
-                            <h5 class="card-title mb-0">@product.Name</h5>
+                            <a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none text-dark flex-grow-1 d-flex flex-column">
+                                <div class="card-header-main text-white">
+                                    <h5 class="card-title mb-0 fw-bold fs-4">@product.Name</h5>
+                                </div>
+
+                                <div class="card-body p-0 text-center bg-light">
+                                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                    {
+                                        <img src="@product.ImageUrl" alt="@product.Name" class="img-fluid" style="height: 200px; object-fit: contain; padding: 10px;" />
+                                    }
+                                    else
+                                    {
+                                        <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                                            <i class="fa-solid fa-image text-muted" style="font-size: 4rem;"></i>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="card-body d-flex flex-column p-4">
+                                    <div class="mb-3">
+                                        <span class="badge bg-light text-primary border px-3 py-2 fs-6">
+                                            @Model.Categories.FirstOrDefault(c => c.Id == product.CategoryId)?.Name
+                                        </span>
+                                    </div>
+
+                                    <div class="my-2">
+                                        <span class="price-box">@product.Price ₴</span>
+                                    </div>
+
+                                    <p class="card-text text-muted mt-3 mb-0 flex-grow-1">
+                                        @product.Description
+                                    </p>
+                                </div>
+                            </a>
+
+                            @*@if (User.IsInRole("Admin"))
+                            {*@
+                                <div class="card-footer bg-white border-0 d-flex justify-content-between gap-3 px-4 pb-4 mt-auto">
+                                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@product.Id"
+                                       class="btn btn-outline-primary btn-custom flex-grow-1">
+                                        Edit
+                                    </a>
+                                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@product.Id"
+                                       class="btn btn-outline-danger btn-custom flex-grow-1"
+                                       onclick="return confirm('Видалити цей товар?');">
+                                        Delete
+                                    </a>
+                                </div>
+                            @*}*@
                         </div>
-                        <div class="card-body bg-white">
-                            <h6 class="card-subtitle mb-2">Category: @Model.Categories.Where(c => c.Id == product.CategoryId).First().Name</h6>
-                        </div>
-
-                        <div class="card-body bg-white">
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                ID: @product.Id
-                            </h6>
-
-                            <p class="card-text">
-                                <strong>Price:</strong>
-                                <span class="text-success">@product.Price ₴</span>
-                            </p>
-
-                            <p class="card-text">
-                                @product.Description
-                            </p>
-                        </div>
-
-                        
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <div class="card-footer bg-white border-0 text-end">
-                                <a asp-controller="Home"
-                                   asp-action="Edit"
-                                   asp-route-id="@product.Id"
-                                   class="btn btn-outline-primary btn-sm me-2">
-                                    Edit
-                                </a>
-                            </div>
-
-                            <div class="card-footer bg-white border-0 text-end">
-                                <a asp-controller="Home"
-                                   asp-action="Delete"
-                                   asp-route-id="@product.Id"
-                                   class="btn btn-outline-danger btn-sm"
-                                   onclick="return confirm('Ви впевнені що хочете видалити цей продукт?');">
-                                    Delete
-                                </a>
-                            </div>
-                        }
-
-
                     </div>
-                </div>
+                }
             }
-        }
+            }
     </div>
-
 </div>
