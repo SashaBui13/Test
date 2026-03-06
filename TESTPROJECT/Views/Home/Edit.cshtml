@@ -43,12 +43,19 @@
                                     <input asp-for="Price" type="number" min="0" step="1" class="form-control" placeholder="Ціна" required>
                                     <label>Ціна (₴)</label>
                                 </div>
+
+                               
                             </div>
                         </div>
 
                         <div class="form-floating mb-4">
                             <input asp-for="Description" class="form-control" placeholder="Опис" required>
-                            <label>Опис товару</label>
+                            <label>Короткий опис (на картці)</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="LongDescription" class="form-control" placeholder="Довгий Опис" required>
+                            <label>Довгий опис(на сторінці продукту)</label>
                         </div>
 
                         <div class="form-floating mb-4">

@@ -8,6 +8,7 @@
         public int Price { get; set; }
         public bool IsDeleted { get; set; } = false;
         public string ImageUrl { get; set; }
+        public string LongDescription { get; set; }
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }

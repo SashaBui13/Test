@@ -8,5 +8,6 @@
         public string categoryName { get; set; }
 
         public string categoryDescription { get; set; }
+        public string categoryImageUrl { get; set; }
     }
 }

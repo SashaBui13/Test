@@ -54,6 +54,7 @@ namespace YourProjectName.Controllers
                 Description = product.Description,
                 CategoryId = product.CategoryId,
                 ImageUrl = product.ImageUrl,
+                LongDescription = product.LongDescription,
                 Categories = _context.Categories.ToList()
             };
 
@@ -83,9 +84,9 @@ namespace YourProjectName.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public IActionResult AddProduct(string ProductName, int ProductPrice, string ProductDescription, int CategoryId, IFormFile ImageFile)
+       // [HttpPost]
+       // [Authorize(Roles = "Admin")]
+        public IActionResult AddProduct(string ProductName, int ProductPrice, string ProductDescription, int CategoryId, IFormFile ImageFile, string LongDescription)
         {
             string imageUrl = null;
 
@@ -110,7 +111,8 @@ namespace YourProjectName.Controllers
                 Price = ProductPrice,
                 Description = ProductDescription,
                 CategoryId = CategoryId,
-                ImageUrl = imageUrl
+                ImageUrl = imageUrl,
+                LongDescription = LongDescription
             };
 
             _context.Products.Add(product);
@@ -119,7 +121,7 @@ namespace YourProjectName.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Admin")]
+      // [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var product = _context.Products.Find(id);
@@ -133,14 +135,15 @@ namespace YourProjectName.Controllers
                 Description = product.Description,
                 CategoryId = product.CategoryId,
                 ImageUrl = product.ImageUrl,
+                LongDescription = product.LongDescription,
                 Categories = _context.Categories.Where(c => !c.IsDeleted).ToList()
             };
 
             return View(viewModel);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
+      //  [HttpPost]
+       // [Authorize(Roles = "Admin")]
         public IActionResult Edit(ProductViewModel model, IFormFile ImageFile)
         {
 
@@ -184,13 +187,14 @@ namespace YourProjectName.Controllers
             product.Price = model.Price;
             product.Description = model.Description;
             product.CategoryId = model.CategoryId;
+            product.LongDescription = model.LongDescription;
 
             _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var product = _context.Products.Find(id);

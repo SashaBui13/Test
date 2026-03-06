@@ -13,7 +13,7 @@ namespace TESTPROJECT.Models.ViewModels
         public int CategoryId { get; set; }
         public string? ImageUrl { get; set; }
         public IFormFile? ImageFile { get; set; }
-
+        public string LongDescription { get; set; }
     }
 }
 
