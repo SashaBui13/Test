@@ -12,7 +12,20 @@
             {
                 <div class="col-md-4 col-sm-6">
                     <div class="card h-100 item-card shadow-sm d-flex flex-column">
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none text-dark flex-grow-1 d-flex flex-column">
                         <div class="card-header-main text-white">
+                            <div class="card-body p-0 text-center bg-light">
+                                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                {
+                                    <img src="@product.ImageUrl" alt="@product.Name" class="img-fluid" style="height: 200px; object-fit: contain; padding: 10px;" />
+                                }
+                                else
+                                {
+                                    <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                                        <i class="fa-solid fa-image text-muted" style="font-size: 4rem;"></i>
+                                    </div>
+                                }
+                            </div>
                             <h5 class="card-title mb-0 fw-bold fs-4">@product.Name</h5>
                         </div>
 
@@ -23,6 +36,7 @@
                                 </span>
                             </div>
 
+
                             <div class="my-2">
                                 <span class="price-box">@product.Price ₴</span>
                             </div>
@@ -31,6 +45,7 @@
                                 @product.Description
                             </p>
                         </div>
+                        </a>
 
                         @if (User.IsInRole("Admin"))
                         {
@@ -54,6 +69,7 @@
                                 </button>
                             </div>
                         }
+                        
                     </div>
                 </div>
             }
