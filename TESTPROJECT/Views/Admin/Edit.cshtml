@@ -1,0 +1,55 @@
+﻿@model TESTPROJECT.Models.ViewModels.AdminViewModel
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0" style="border-radius: 15px;">
+
+                <div class="card-header text-white text-center" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); border-radius: 15px 15px 0 0;">
+                    <h3 class="mb-0 fw-bold py-2">Редагувати дані користувача</h3>
+                </div>
+
+                <div class="card-body p-4 bg-white">
+
+                    <form asp-action="Edit" method="post">
+
+                        <input asp-for="UserId" type="hidden" />
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 text-center">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-center shadow-sm mb-3" style="height: 200px;">
+                                    <i class="fa-solid fa-folder-open text-muted" style="font-size: 3rem;"></i>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="UserName" class="form-control" placeholder="Name" required />
+                                    <label asp-for="UserName">UserName</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="UserEmail" class="form-control" placeholder="Email" required />
+                            <label asp-for="UserEmail">Email</label>
+                        </div>
+
+                        <div class="d-flex gap-3 mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary fw-bold w-50 py-2" style="border-radius: 10px;">
+                                Скасувати
+                            </a>
+
+                            <button type="submit" class="btn text-white fw-bold w-50 py-2"
+                                    style="background-color:#6f42c1; border-radius: 10px;">
+                                Оновити Користувача
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

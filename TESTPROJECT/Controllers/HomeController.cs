@@ -84,8 +84,8 @@ namespace YourProjectName.Controllers
             return View(model);
         }
 
-       // [HttpPost]
-       // [Authorize(Roles = "Admin")]
+       [HttpPost]
+       [Authorize(Roles = "Admin")]
         public IActionResult AddProduct(string ProductName, int ProductPrice, string ProductDescription, int CategoryId, IFormFile ImageFile, string LongDescription)
         {
             string imageUrl = null;
@@ -121,7 +121,7 @@ namespace YourProjectName.Controllers
             return RedirectToAction("Index");
         }
 
-      // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var product = _context.Products.Find(id);
@@ -142,8 +142,8 @@ namespace YourProjectName.Controllers
             return View(viewModel);
         }
 
-      //  [HttpPost]
-       // [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(ProductViewModel model, IFormFile ImageFile)
         {
 
@@ -194,7 +194,7 @@ namespace YourProjectName.Controllers
             return RedirectToAction("Index");
         }
 
-       // [Authorize(Roles = "Admin")]
+       [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var product = _context.Products.Find(id);

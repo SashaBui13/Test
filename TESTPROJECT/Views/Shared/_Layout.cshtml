@@ -13,24 +13,33 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark navbar-main mb-4">
             <div class="container-fluid">
-                <a class="navbar-brand fw-bold fs-4" asp-controller="Home" asp-action="Index">Product Shop</a>
+                <a class="navbar-brand fw-bold fs-4" asp-controller="Home" asp-action="Index"><i class="bi bi-fire"></i>Product Shop<i class="bi bi-fire"></i></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white px-3" asp-controller="Home" asp-action="Index">Головна</a>
+							<a class="nav-link text-white px-3" asp-controller="Home" asp-action="Index">Головна  <i class="bi bi-house"></i></a>
                         </li>
                     </ul>
                     <div class="d-flex align-items-center gap-4">
                         <partial name="_LoginPartial" />
+                        <li class="nav-item">
+                            <a class="nav-link text-white px-3" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart3 me-2"></i> Ваш кошик</a>
+                        </li>
                         @if (User.IsInRole("Admin"))
                         {
-                            <div class="d-flex align-items-center gap-2">
-                                <a asp-controller="Home" asp-action="Product" class="btn btn-light fw-bold">Товари</a>
-                                <a asp-controller="Category" asp-action="Index" class="btn btn-light fw-bold">Категорії</a>
-                                <a asp-controller="Home" asp-action="RemovedProducts" class="btn btn-outline-light fw-bold">Архів</a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index" fw-bold">Користувачі</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Product" fw-bold">Товари</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Category" asp-action="Index" fw-bold">Категорії</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="RemovedProducts" fw-bold">Архів</a></li>
+                                </ul>
                             </div>
                         }
                         <div class="position-relative d-inline-block">
