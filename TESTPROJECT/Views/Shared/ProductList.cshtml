@@ -1,4 +1,5 @@
 ﻿@model TESTPROJECT.Models.ViewModels.ProductViewModel
+
 <div class="row g-4">
     @if (Model?.Products != null)
     {
@@ -12,7 +13,7 @@
                         <a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none text-dark flex-grow-1 d-flex flex-column">
                             <div class="card-header-main text-white">
                                 <h5 class="card-title mb-0 fw-bold fs-4">@product.Name</h5>
-                                <h3>@product.Category.Name</h3>
+                                <h3>@product.Category?.Name</h3>
                             </div>
 
                             <div class="card-body p-0 text-center bg-light">
@@ -45,8 +46,8 @@
                             </div>
                         </a>
 
-                        @*@if (User.IsInRole("Admin"))
-                        {*@
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
                             <div class="card-footer bg-white border-0 d-flex justify-content-between gap-3 px-4 pb-4 mt-auto">
                                 <a asp-controller="Home" asp-action="Edit" asp-route-id="@product.Id"
                                    class="btn btn-outline-primary btn-custom flex-grow-1">
@@ -58,15 +59,15 @@
                                     Delete
                                 </a>
                             </div>
-                        @*}
+                        }
                         else
-                        {*@
+                        {
                             <div class="card-footer bg-white border-0 px-4 pb-4 mt-auto">
                                 <a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id" class="btn text-white w-100 btn-custom d-block text-center text-decoration-none" style="background-color: var(--main-purple);">
                                     <i class="fa-solid fa-basket-shopping me-2"></i> В кошик
                                 </a>
                             </div>
-                        @*}*@
+                        }
 
                     </div>
                 </div>

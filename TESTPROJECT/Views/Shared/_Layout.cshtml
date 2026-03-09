@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Product Shop</title>
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TESTPROJECT.styles.css" asp-append-version="true" />
@@ -24,21 +23,20 @@
                             <a class="nav-link text-white px-3" asp-controller="Home" asp-action="Index">Головна</a>
                         </li>
                     </ul>
-
                     <div class="d-flex align-items-center gap-4">
                         <partial name="_LoginPartial" />
-
-                        <div class="d-flex align-items-center gap-2">
-                            <a asp-controller="Home" asp-action="Product" class="btn btn-light fw-bold">Товари</a>
-                            <a asp-controller="Category" asp-action="Index" class="btn btn-light fw-bold">Категорії</a>
-                            <a asp-controller="Home" asp-action="RemovedProducts" class="btn btn-outline-light fw-bold">Архів</a>
-                        </div>
-
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="d-flex align-items-center gap-2">
+                                <a asp-controller="Home" asp-action="Product" class="btn btn-light fw-bold">Товари</a>
+                                <a asp-controller="Category" asp-action="Index" class="btn btn-light fw-bold">Категорії</a>
+                                <a asp-controller="Home" asp-action="RemovedProducts" class="btn btn-outline-light fw-bold">Архів</a>
+                            </div>
+                        }
                         <div class="position-relative d-inline-block">
                             <button class="btn btn-light fw-bold" onclick="toggleMenu(event)">
                                 <i class="bi bi-telephone-fill me-1"></i> Контакти
                             </button>
-
                             <div id="contactMenu" class="contact-menu">
                                 <h5 class="text-danger border-bottom pb-3 mb-3">Контакти</h5>
                                 <p class="mb-2 fs-5">0 (988) 114-761</p>
@@ -62,7 +60,6 @@
             </div>
         </nav>
     </header>
-
     <div class="main-wrapper">
         <div class="container">
             <main role="main" class="pb-5">
@@ -70,7 +67,6 @@
             </main>
         </div>
     </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -80,12 +76,10 @@
             const menu = document.getElementById('contactMenu');
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
-
         document.addEventListener('click', function(event) {
             const menu = document.getElementById('contactMenu');
             const isClickInside = menu.contains(event.target);
             const isButton = event.target.closest('.btn-light');
-
             if (!isClickInside && !isButton && menu.style.display === 'block') {
                 menu.style.display = 'none';
             }
