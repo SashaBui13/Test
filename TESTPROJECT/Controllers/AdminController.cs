@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
+using System.Threading.Tasks;
 
 
 namespace TESTPROJECT.Controllers
@@ -37,89 +38,62 @@ namespace TESTPROJECT.Controllers
             return View(users);
         }
 
-        /*public IActionResult Edit(int id)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(string id)
         {
-            var product = _context.Products.Find(id);
-            if (product == null) return NotFound();
+            var user = await _UserManager.FindByIdAsync(id);
+            if (user == null) return NotFound();
 
-            var viewModel = new ProductViewModel
+            var viewModel = new AdminViewModel
             {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                Description = product.Description,
-                CategoryId = product.CategoryId,
-                ImageUrl = product.ImageUrl,
-                LongDescription = product.LongDescription,
-                Categories = _context.Categories.Where(c => !c.IsDeleted).ToList()
+                UserId = user.Id,
+                UserName = user.UserName,
+                UserEmail = user.Email
             };
 
             return View(viewModel);
         }
 
-        //  [HttpPost]
-        // [Authorize(Roles = "Admin")]
-        public IActionResult Edit(ProductViewModel model, IFormFile ImageFile)
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(AdminViewModel model)
         {
-
-
-            ModelState.Remove("ImageUrl");
-            ModelState.Remove("ImageFile");
-
             if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _UserManager.FindByIdAsync(model.UserId);
+            if (user == null) return NotFound();
+
+            user.UserName = model.UserName;
+            user.Email = model.UserEmail;
+
+            var result = await _UserManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
             {
-                model.Categories = _context.Categories.ToList();
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
                 return View(model);
             }
-
-            var product = _context.Products.Find(model.Id);
-            if (product == null) return NotFound();
-
-            if (ImageFile != null)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products");
-
-                if (!string.IsNullOrEmpty(product.ImageUrl))
-                {
-                    string oldFilePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('/'));
-                    if (System.IO.File.Exists(oldFilePath))
-                    {
-                        System.IO.File.Delete(oldFilePath);
-                    }
-                }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + ImageFile.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    ImageFile.CopyTo(fileStream);
-                }
-                product.ImageUrl = "/images/products/" + uniqueFileName;
-            }
-
-            product.Name = model.Name;
-            product.Price = model.Price;
-            product.Description = model.Description;
-            product.CategoryId = model.CategoryId;
-            product.LongDescription = model.LongDescription;
-
-            _context.SaveChanges();
-
             return RedirectToAction("Index");
         }
 
-        // [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int id)
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteTotal(string id)
         {
-            var product = _context.Products.Find(id);
-            if (product == null) return View("Error");
+            var user = await _UserManager.FindByIdAsync(id);
 
-            product.IsDeleted = true;
-            _context.SaveChanges();
+            if (user != null)
+            {
+                await _UserManager.DeleteAsync(user);
+            }
+
             return RedirectToAction("Index");
-        */
-
+        }
 
 
     }
