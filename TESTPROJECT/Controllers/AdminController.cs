@@ -82,7 +82,6 @@ namespace TESTPROJECT.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTotal(string id)
         {
             var user = await _UserManager.FindByIdAsync(id);
