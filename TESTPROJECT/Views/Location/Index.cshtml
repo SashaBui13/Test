@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Головна сторінка локацій";
+}
+@model TESTPROJECT.Models.ViewModels.LocationViewModel
+
+<div class="row g-4">
+    @foreach (var location in Model.Location)
+    {
+        @if (location.LocationIsDeleted == false)
+        {
+            <div class="col-md-4">
+                <div class="card h-100 shadow border-0 d-flex flex-column">
+
+                    <div class="card-header text-white" style="background-color:#6f42c1;">
+                        <h5 class="card-title mb-0">@location.LocationName</h5>
+                    </div>
+
+                    <div class="card-body bg-white flex-grow-1">
+                        <h6 class="card-subtitle mb-2 text-muted">ID: @location.LocationId</h6>
+                        <p class="card-text">@location.LocationAdress</p>
+                        <h6>
+                            <a href="@location.LocationMapsPath" target="_blank">Посилання на Google Maps</a>
+                        </h6>
+                    </div>
+                  
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="card-footer bg-white border-0 d-flex justify-content-between px-3 pb-3 gap-2">
+                            <a asp-controller="Location" asp-action="Edit" asp-route-id="@location.LocationId"
+                               class="btn btn-outline-primary btn-sm flex-grow-1">
+                                Edit
+                            </a>
+                            <a asp-controller="Location" asp-action="Delete" asp-route-id="@location.LocationId"
+                               class="btn btn-outline-danger btn-sm flex-grow-1"
+                               onclick="return confirm('Ви впевнені що хочете видалити цю локацію?');">
+                                Delete
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>

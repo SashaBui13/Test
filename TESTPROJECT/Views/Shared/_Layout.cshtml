@@ -32,13 +32,16 @@
                         {
                             <div class="btn-group">
                                 <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Admin
+                                   ADM
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index" fw-bold">Користувачі</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Location" asp-action="Index" fw-bold">Список локацій</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Location" asp-action="RemovedLocations" fw-bold">Архів локацій</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Location" asp-action="Add" fw-bold">Додати локацію</a></li>
                                     <li><a class="dropdown-item" asp-controller="Home" asp-action="Product" fw-bold">Товари</a></li>
                                     <li><a class="dropdown-item" asp-controller="Category" asp-action="Index" fw-bold">Категорії</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="RemovedProducts" fw-bold">Архів</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="RemovedProducts" fw-bold">Архів товарів</a></li>
                                 </ul>
                             </div>
                         }
