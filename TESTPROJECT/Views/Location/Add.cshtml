@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Управління локаціями";
+}
+@model TESTPROJECT.Models.ViewModels.LocationViewModel
+
+<div class="container py-5">
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0" style="border-radius: 15px;">
+                    <div class="card-header text-white text-center" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); border-radius: 15px 15px 0 0;">
+                        <h3 class="mb-0 fw-bold py-2">Додати нову локацію</h3>
+                    </div>
+                    <div class="card-body p-4 bg-white">
+                        <form asp-controller="Location" asp-action="AddLocation" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input name="LocationName" type="text" class="form-control" placeholder="Назва локації" required>
+                                        <label>Назва локації</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input name="LocationAdress" type="text" min="0" step="1" class="form-control" placeholder="Адреса" required>
+                                        <label>Адреса</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-floating mb-3">
+                                <input name="LocationMapsPath" type="text" class="form-control" placeholder="Посилання на мапс" required>
+                                <label>Посилання на Google Maps</label>
+                            </div>
+                           
+                            <div class="d-grid mt-2">
+                                <button type="submit" class="btn text-white fw-bold py-3" style="background-color:#6f42c1; border-radius: 10px; font-size: 1.1rem;">
+                                    <i class="fa-solid fa-plus me-2"></i>Зберегти локацію
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row g-4">
+        @foreach (var location in Model.Location)
+        {
+            @if (location.LocationIsDeleted == false)
+            {
+                <div class="col-md-4">
+                    <div class="card h-100 shadow border-0 d-flex flex-column">
+
+                        <div class="card-header text-white" style="background-color:#6f42c1;">
+                            <h5 class="card-title mb-0">@location.LocationName</h5>
+                        </div>
+
+                        <div class="card-body bg-white flex-grow-1">
+                            <h6 class="card-subtitle mb-2 text-muted">ID: @location.LocationId</h6>
+                            <p class="card-text">@location.LocationAdress</p>
+                        </div>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="card-footer bg-white border-0 d-flex justify-content-between px-3 pb-3 gap-2">
+                                <a asp-controller="Location" asp-action="Edit" asp-route-id="@location.LocationId"
+                                   class="btn btn-outline-primary btn-sm flex-grow-1">
+                                    Edit
+                                </a>
+                                <a asp-controller="Location" asp-action="Delete" asp-route-id="@location.LocationId"
+                                   class="btn btn-outline-danger btn-sm flex-grow-1"
+                                   onclick="return confirm('Ви впевнені що хочете видалити цю локацію?');">
+                                    Delete
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

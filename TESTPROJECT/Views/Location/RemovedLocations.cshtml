@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Архів локацій";
+}
+@model TESTPROJECT.Models.ViewModels.LocationViewModel
+
+<div class="container py-5">
+
+    <div class="row g-4">
+        @if (Model?.Location != null)
+        {
+            @foreach (var location in Model.Location)
+            {
+                @if (location.LocationIsDeleted != false)
+                {
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow border-0">
+
+                            <div class="card-header text-white"
+                                 style="background-color:#6f42c1;">
+                                <h5 class="card-title mb-0">@Model.LocationName</h5>
+                            </div>
+                            <div class="card-body bg-white">
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                     @Model.LocationAdress
+                                </h6>
+                            </div>
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="card-footer bg-white border-0 text-end">
+                                    <a asp-controller="Location"
+                                       asp-action="ToLocations"
+                                       asp-route-id="@location.LocationId"
+                                       class="btn btn-outline-success btn-sm me-2">
+                                        Return
+                                    </a>
+                                </div>
+
+                                <div class="card-footer bg-white border-0 text-end">
+                                    <a asp-controller="Location"
+                                       asp-action="Edit"
+                                       asp-route-id="@location.LocationId"
+                                       class="btn btn-outline-primary btn-sm me-2">
+                                        Edit
+                                    </a>
+                                </div>
+
+                                <div class="card-footer bg-white border-0 text-end">
+                                    <a asp-controller="Location"
+                                       asp-action="DeleteTotal"
+                                       asp-route-id="@location.LocationId"
+                                       class="btn btn-outline-danger btn-sm"
+                                       onclick="return confirm('Ви впевнені що хочете видалити цю локацію?');">
+                                        Delete
+                                    </a>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+
+</div>
