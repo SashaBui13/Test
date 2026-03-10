@@ -1,4 +1,11 @@
 ﻿@model TESTPROJECT.Models.ViewModels.ProductViewModel
 
-
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb bg-transparent p-0 m-0">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index" class="text-decoration-none fw-semibold" style="color: var(--main-purple);">Головна</a>
+        </li>
+            <li class="breadcrumb-item active fw-semibold" aria-current="page">@Model.category.Name</li>
+    </ol>
+</nav>
 <partial name="ProductList" model="Model"></partial>

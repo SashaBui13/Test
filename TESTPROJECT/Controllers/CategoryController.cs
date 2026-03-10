@@ -71,6 +71,7 @@ namespace TESTPROJECT.Controllers
 
             var viewModel = new ProductViewModel
             {
+                category = _context.Categories.Where(pr => pr.Id == id).FirstOrDefault(),
                 Products = product,
             };
 

@@ -11,6 +11,7 @@ namespace TESTPROJECT.Models.ViewModels
         public int Price { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
+        public Category category { get; set; }
         public string? ImageUrl { get; set; }
         public IFormFile? ImageFile { get; set; }
         public string LongDescription { get; set; }
