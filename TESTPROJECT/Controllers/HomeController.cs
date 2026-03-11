@@ -37,9 +37,29 @@ namespace YourProjectName.Controllers
                 Products = products,
                 Categories = categories
             };
+            FindProduct("int");
 
             return View(model);
         }
+
+        public IActionResult FindProduct(string request)
+        { 
+            var product = _context.Products.Where(p => p.Name.Contains(request)).ToList();
+
+           /* var viewModel = new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                ImageUrl = product.ImageUrl,
+
+            };
+           */
+            return View();
+        
+            }
 
         public IActionResult Details(int id)
         {

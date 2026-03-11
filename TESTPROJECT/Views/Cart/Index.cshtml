@@ -5,47 +5,50 @@
 
     @if (!Model.Items.Any())
     {
-            <div class="text-center py-5">
-                <i class="bi bi-cart-x text-muted" style="font-size: 4rem;"></i>
-                <p class="fs-4 mt-3">Кошик порожній</p>
-                <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Повернутися до покупок</a>
-            </div>
+        <div class="text-center py-5">
+            <i class="fa-solid fa-cart-arrow-down text-muted" style="font-size: 4rem;"></i>
+            <p class="fs-4 mt-3">Кошик порожній</p>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Повернутися до покупок</a>
+        </div>
     }
     else
     {
-            <div class="row">
-                <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-8">
                 @foreach (var item in Model.Items)
                 {
-                            <div class="card mb-3 shadow-sm border-0" style="border-radius: 12px;">
-                                <div class="card-body d-flex align-items-center">
-                                    <img src="@item.Product.ImageUrl" style="width: 80px; height: 80px; object-fit: contain;" />
-                                    <div class="ms-4 flex-grow-1">
-                                        <h5 class="fw-bold mb-1">@item.Product.Name</h5>
-                                        <p class="text-muted mb-0">Ціна: @item.Product.Price ₴</p>
-                                    </div>
-                                    <div class="text-center mx-4">
-                                        <span class="fw-bold fs-5">x @item.Quantity</span>
-                                    </div>
-                                    <a asp-action="RemoveFromCart" asp-route-id="@item.Id" class="text-danger fs-4">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </div>
+                    <div class="card mb-3 shadow-sm border-0" style="border-radius: 12px;">
+                        <div class="card-body d-flex align-items-center">
+                            @if (!string.IsNullOrEmpty(item.Product.ImageUrl))
+                            {
+                                <img src="@item.Product.ImageUrl" style="width: 80px; height: 80px; object-fit: contain;" />
+                            }
+                            <div class="ms-4 flex-grow-1">
+                                <h5 class="fw-bold mb-1">@item.Product.Name</h5>
+                                <p class="text-muted mb-0">Ціна: @item.Product.Price ₴</p>
                             </div>
-                }
-                </div>
-                <div class="col-md-4">
-                    <div class="card shadow border-0 p-4" style="border-radius: 15px; background: white;">
-                        <h4 class="fw-bold mb-4">Разом:</h4>
-                        <div class="d-flex justify-content-between fs-5 mb-4">
-                            <span>До сплати:</span>
-                            <span class="fw-bold text-primary">@Model.TotalPrice ₴</span>
+                            <div class="text-center mx-4">
+                                <span class="fw-bold fs-5">x @item.Quantity</span>
+                            </div>
+                            <a asp-action="RemoveFromCart" asp-route-id="@item.Id" class="text-danger fs-4">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
                         </div>
-                        <button class="btn btn-lg btn-primary w-100 fw-bold" style="background: var(--accent-gradient); border: none;">
-                            Оформити замовлення
-                        </button>
                     </div>
+                }
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow border-0 p-4" style="border-radius: 15px; background: white;">
+                    <h4 class="fw-bold mb-4">Разом:</h4>
+                    <div class="d-flex justify-content-between fs-5 mb-4">
+                        <span>До сплати:</span>
+                        <span class="fw-bold text-primary">@Model.TotalPrice ₴</span>
+                    </div>
+                    <a asp-action="Checkout" class="btn btn-lg text-white w-100 fw-bold" style="background: var(--accent-gradient); border: none; border-radius: 10px;">
+                        Перейти до оформлення
+                    </a>
                 </div>
             </div>
+        </div>
     }
 </div>

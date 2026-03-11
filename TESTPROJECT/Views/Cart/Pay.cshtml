@@ -1,0 +1,15 @@
+﻿<div class="container text-center py-5">
+    <div class="card border-0 shadow-lg p-5 mx-auto" style="max-width: 500px; border-radius: 20px;">
+        <i class="fa-solid fa-check-circle text-success" style="font-size: 5rem;"></i>
+        <h2 class="fw-bold mt-3">Замовлення № @ViewBag.OrderId</h2>
+        <p class="text-muted fs-5">Сума до сплати: <span class="fw-bold text-dark">@ViewBag.Amount ₴</span></p>
+
+        <form method="POST" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
+            <input type="hidden" name="data" value="@ViewBag.Data" />
+            <input type="hidden" name="signature" value="@ViewBag.Signature" />
+            <button type="submit" class="btn btn-success btn-lg w-100 py-3 fw-bold mt-4" style="border-radius: 12px;">
+                <i class="fa-solid fa-wallet me-2"></i> Сплатити карткою
+            </button>
+        </form>
+    </div>
+</div>

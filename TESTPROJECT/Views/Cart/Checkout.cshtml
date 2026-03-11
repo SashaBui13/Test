@@ -1,0 +1,116 @@
+﻿@model TESTPROJECT.Models.Order
+
+<div class="container mt-5" style="max-width: 800px;">
+    <div class="card shadow-lg border-0 p-5" style="border-radius: 20px;">
+        <h3 class="fw-bold mb-4" style="color: var(--main-purple);">Оформлення замовлення</h3>
+
+        <form asp-action="ConfirmOrder" method="post" id="orderForm">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Прізвище</label>
+                    <input asp-for="LastName" class="form-control" placeholder="Шевченко" required />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Ім'я</label>
+                    <input asp-for="FirstName" class="form-control" placeholder="Тарас" required />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label fw-bold">Телефон</label>
+                    <input asp-for="PhoneNumber" class="form-control" value="+380" required />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <h5 class="fw-bold mt-4 border-bottom pb-2">Доставка (Нова Пошта)</h5>
+
+                <div class="col-md-6 position-relative">
+                    <label class="form-label fw-bold">Місто</label>
+                    <input type="text" id="cityInput" asp-for="City" class="form-control" placeholder="Введіть місто..." autocomplete="off" required />
+                    <div id="cityList" class="list-group position-absolute w-100 shadow-sm" style="z-index: 1000; max-height: 200px; overflow-y: auto;"></div>
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Відділення</label>
+                    <select id="warehouseInput" asp-for="Warehouse" class="form-select" disabled required>
+                        <option value="">Спочатку оберіть місто...</option>
+                    </select>
+                    <span asp-validation-for="Warehouse" class="text-danger"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mt-5 fw-bold py-3" style="background: var(--accent-gradient); border: none; border-radius: 12px;">
+                <i class="fa-solid fa-credit-card me-2"></i> Підтвердити та оплатити
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const apiKey = '169c7af2256c8821013504e7bffbf81e';
+
+        document.getElementById('cityInput').addEventListener('input', async function() {
+            let query = this.value;
+            if (query.length < 2) return;
+
+            let response = await fetch('https://api.novaposhta.ua/v2.0/json/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    apiKey: apiKey,
+                    modelName: "Address",
+                    calledMethod: "getCities",
+                    methodProperties: { FindByString: query }
+                })
+            });
+
+            let result = await response.json();
+            let list = document.getElementById('cityList');
+            list.innerHTML = '';
+
+            result.data.forEach(city => {
+                let item = document.createElement('button');
+                item.className = 'list-group-item list-group-item-action';
+                item.innerText = city.Description;
+                item.type = 'button';
+                item.onclick = () => selectCity(city.Description, city.Ref);
+                list.appendChild(item);
+            });
+        });
+
+        async function selectCity(name, ref) {
+            document.getElementById('cityInput').value = name;
+            document.getElementById('cityList').innerHTML = '';
+
+            let response = await fetch('https://api.novaposhta.ua/v2.0/json/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    apiKey: apiKey,
+                    modelName: "Address",
+                    calledMethod: "getWarehouses",
+                    methodProperties: { CityRef: ref }
+                })
+            });
+
+            let result = await response.json();
+            let select = document.getElementById('warehouseInput');
+            select.innerHTML = '<option value="">Оберіть відділення...</option>';
+            select.disabled = false;
+
+            result.data.forEach(w => {
+                let opt = document.createElement('option');
+                opt.value = w.Description;
+                opt.innerText = w.Description;
+                select.appendChild(opt);
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.id !== 'cityInput') {
+                document.getElementById('cityList').innerHTML = '';
+            }
+        });
+    </script>
+}
