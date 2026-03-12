@@ -17,5 +17,6 @@ namespace TESTPROJECT.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ProductToLocation> ProductsToLocations { get; set; }
     }
 }
