@@ -37,6 +37,14 @@ namespace TESTPROJECT.Controllers
             var role = _roleManager.Roles.ToList();
             return View(users);
         }
+        [HttpPost]
+        public IActionResult FindUser(string request)
+        {
+            var users = _UserManager.Users.Where(u => u.UserName.Contains(request)).ToList();
+            var roles = _UserManager.Users.ToList();
+            return View("Index", users);
+
+        }
 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id)

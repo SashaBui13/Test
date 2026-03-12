@@ -1,6 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model List<IdentityUser>
 
+<div class="input-group mb-3">
+    <form asp-action="FindUser" asp-controller="Admin" method="post">
+        <input type="text" name="request" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+
+        <button typeof="submit" class="btn btn-outline-secondary" type="submit" id="button-addon2">Done</button>
+    </form>
+</div>
+
 @foreach(var user in Model)
 {
 	<div>@user.UserName @user.PhoneNumber @user.Email</div>
