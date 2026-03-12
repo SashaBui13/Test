@@ -37,27 +37,23 @@ namespace YourProjectName.Controllers
                 Products = products,
                 Categories = categories
             };
-            FindProduct("int");
-
+            
+            
             return View(model);
         }
-
+        [HttpPost]
         public IActionResult FindProduct(string request)
         { 
             var product = _context.Products.Where(p => p.Name.Contains(request)).ToList();
-
-           /* var viewModel = new ProductViewModel
+            var category = _context.Categories.ToList();
+           var viewModel = new ProductViewModel
             {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                Description = product.Description,
-                CategoryId = product.CategoryId,
-                ImageUrl = product.ImageUrl,
-
+               Products = product,
+               Categories = category,
+                
             };
-           */
-            return View();
+           
+            return View("Index", viewModel);
         
             }
 
