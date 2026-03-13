@@ -9,5 +9,6 @@ namespace TESTPROJECT.Models
         public string LocationAdress { get; set; }
         public string LocationMapsPath { get; set; }
         public bool LocationIsDeleted { get; set; }
+        public List<ProductToLocation> ProductToLocations { get; set; }
     }
 }
