@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
-
 namespace YourProjectName.Controllers
 {
     public class HomeController : Controller
@@ -20,6 +19,7 @@ namespace YourProjectName.Controllers
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            
         }
 
         public IActionResult Privacy()
@@ -29,16 +29,14 @@ namespace YourProjectName.Controllers
 
         public IActionResult Index()
         {
+            
             var products = _context.Products.ToList();
             var categories = _context.Categories.ToList();
-
             var model = new ProductViewModel
             {
                 Products = products,
                 Categories = categories
             };
-            
-            
             return View(model);
         }
         [HttpPost]
