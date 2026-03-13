@@ -35,6 +35,8 @@ namespace TESTPROJECT.Controllers
                 foreach(var prod in product)
                 {
                     var ptl = new ProductToLocation();
+                    var loh = _context.ProductsToLocations.Where(x => x.ProductId == prod.Id && x.LocationId == loc.LocationId).ToList();
+                    if (loh.Count() > 0) continue;
                     ptl.ProductId = prod.Id;
                     ptl.LocationId = loc.LocationId;
                     _context.ProductsToLocations.Update(ptl);
@@ -46,7 +48,9 @@ namespace TESTPROJECT.Controllers
             {
                 
             };
-            return View();
+            return RedirectToAction("Index", "Home");
         }
+        
+
     }
 }
