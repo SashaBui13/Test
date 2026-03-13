@@ -23,6 +23,18 @@ namespace TESTPROJECT.Controllers
             return View();
         }
 
+        /*public IActionResult Edit(int quantity)
+        {
+            var ptl = _context.ProductsToLocations.ToList();
+            var viewmodel = new ProductToLocation()
+            {
+                viewmodel.Quantity = quantity,
+                if (Quantity != 0) viewmodel.IsDeleted = false
+            };
+            return View();
+        }
+        */
+
 
         public IActionResult AutoStartFill()
         {
@@ -36,6 +48,7 @@ namespace TESTPROJECT.Controllers
                 {
                     var ptl = new ProductToLocation();
                     var loh = _context.ProductsToLocations.Where(x => x.ProductId == prod.Id && x.LocationId == loc.LocationId).ToList();
+                    if(ptl.Quantity == 0) ptl.IsDeleted = true;
                     if (loh.Count() > 0) continue;
                     ptl.ProductId = prod.Id;
                     ptl.LocationId = loc.LocationId;
