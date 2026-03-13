@@ -12,8 +12,8 @@ using TESTPROJECT.Data;
 namespace TESTPROJECT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260310083936_AddLocation")]
-    partial class AddLocation
+    [Migration("20260313080032_InitialCommit")]
+    partial class InitialCommit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -262,7 +262,8 @@ namespace TESTPROJECT.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -272,7 +273,8 @@ namespace TESTPROJECT.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("Id");
 
@@ -291,17 +293,97 @@ namespace TESTPROJECT.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("LocationIsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocationMapsPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocationName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("LocationId");
 
                     b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("TESTPROJECT.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Warehouse")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("TESTPROJECT.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("TESTPROJECT.Models.Product", b =>
@@ -317,7 +399,8 @@ namespace TESTPROJECT.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -328,11 +411,13 @@ namespace TESTPROJECT.Migrations
 
                     b.Property<string>("LongDescription")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(600)
+                        .HasColumnType("nvarchar(600)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -342,6 +427,35 @@ namespace TESTPROJECT.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("TESTPROJECT.Models.ProductToLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductsToLocations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -406,6 +520,23 @@ namespace TESTPROJECT.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("TESTPROJECT.Models.OrderItem", b =>
+                {
+                    b.HasOne("TESTPROJECT.Models.Order", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TESTPROJECT.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("TESTPROJECT.Models.Product", b =>
                 {
                     b.HasOne("TESTPROJECT.Models.Category", "Category")
@@ -415,6 +546,36 @@ namespace TESTPROJECT.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("TESTPROJECT.Models.ProductToLocation", b =>
+                {
+                    b.HasOne("TESTPROJECT.Models.Location", null)
+                        .WithMany("ProductToLocations")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TESTPROJECT.Models.Product", null)
+                        .WithMany("ProductToLocations")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TESTPROJECT.Models.Location", b =>
+                {
+                    b.Navigation("ProductToLocations");
+                });
+
+            modelBuilder.Entity("TESTPROJECT.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("TESTPROJECT.Models.Product", b =>
+                {
+                    b.Navigation("ProductToLocations");
                 });
 #pragma warning restore 612, 618
         }
