@@ -5,68 +5,116 @@
 
 <style>
     .category-item {
-        border-radius: 15px;
-        transition: all 0.3s ease;
-        background: white;
-        border: 2px solid transparent !important;
+        border-radius: 20px; 
+        background: rgba(255, 255, 255, 0.85); 
+        backdrop-filter: blur(12px); 
+        border: 1px solid rgba(255, 255, 255, 0.6) !important; 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     }
 
         .category-item:hover {
-            transform: translateY(-4px);
-            border-color: var(--main-purple) !important;
-            box-shadow: 0 10px 20px rgba(111, 66, 193, 0.15) !important;
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.95);
+            border-color: var(--main-purple, #8b5cf6) !important;
+            box-shadow: 0 15px 25px rgba(111, 66, 193, 0.2) !important;
         }
 
     .category-icon {
-        width: 50px;
-        height: 50px;
-        background: rgba(111, 66, 193, 0.1);
-        color: var(--main-purple);
+        width: 65px;
+        height: 65px;
+        background: linear-gradient(135deg, rgba(111, 66, 193, 0.1), rgba(139, 92, 246, 0.2));
+        color: var(--main-purple, #6f42c1);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
-        margin: 0 auto 10px auto;
+        font-size: 1.5rem;
+        margin: 0 auto 15px auto;
+        transition: all 0.3s ease;
+    }
+
+
+    .category-img {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 15px auto;
+        display: block;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .category-item:hover .category-icon {
+        transform: scale(1.1) rotate(5deg);
+        background: linear-gradient(135deg, #6f42c1, #8b5cf6);
+        color: white;
+        box-shadow: 0 8px 15px rgba(111, 66, 193, 0.3);
+    }
+
+    .category-item:hover .category-img {
+        transform: scale(1.1);
+        border-color: #8b5cf6;
+        box-shadow: 0 8px 15px rgba(111, 66, 193, 0.3);
     }
 </style>
 
-<div class="mb-5 mt-3">
-    <h3 class="fw-bold mb-4" style="color: var(--deep-bg);">Категорії</h3>
-    <div class="row g-3">
-        @if (Model?.Categories != null)
-        {
-            @foreach (var category in Model.Categories)
+<div class="container py-4">
+    <div class="mb-5 mt-3">
+        <div class="d-flex align-items-center mb-4">
+            <div class="p-2 rounded-3 me-3" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); color: white;">
+                <i class="fa-solid fa-layer-group fs-4"></i>
+            </div>
+            <h2 class="fw-bold mb-0" style="color: var(--deep-bg, #2c3e50);">Категорії</h2>
+        </div>
+
+        <div class="row g-4">
+            @if (Model?.Categories != null)
             {
-                <div class="col-6 col-md-4 col-lg-3">
-                    <a asp-controller="Category" asp-action="InCategory" asp-route-id="@category.Id" class="text-decoration-none text-dark flex-grow-1 d-flex flex-column">
-                        <div class="card h-100 shadow-sm category-item p-2">
-                            <div class="card-body text-center p-3">
+                @foreach (var category in Model.Categories)
+                {
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a asp-controller="Category" asp-action="InCategory" asp-route-id="@category.Id" class="text-decoration-none text-dark d-block h-100">
+                            <div class="card h-100 category-item p-3">
+                                <div class="card-body text-center p-2 d-flex flex-column justify-content-center">
 
-                                @if (!string.IsNullOrEmpty(category.ImageUrl))
-                                {
-                                    <img src="@category.ImageUrl" alt="@category.Name" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px auto; display: block;" />
-                                }
-                                else
-                                {
-                                    <div class="category-icon">
-                                        <i class="fa-solid fa-layer-group"></i>
-                                    </div>
-                                }
+                                    @if (!string.IsNullOrEmpty(category.ImageUrl))
+                                    {
+                                        <img src="@category.ImageUrl" alt="@category.Name" class="category-img" />
+                                    }
+                                    else
+                                    {
+                                        <div class="category-icon">
+                                            <i class="fa-solid fa-box-open"></i>
+                                        </div>
+                                    }
 
-                                <h6 class="card-title fw-bold mb-1">@category.Name</h6>
-                                @if (!string.IsNullOrEmpty(category.Description))
-                                {
-                                    <small class="text-muted d-block text-truncate">@category.Description</small>
-                                }
+                                    <h5 class="card-title fw-bold mb-2">@category.Name</h5>
+
+                                    @if (!string.IsNullOrEmpty(category.Description))
+                                    {
+                                        <small class="text-muted d-block" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                            @category.Description
+                                        </small>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
+                }
             }
-        }
+        </div>
+    </div>
+
+    <div class="mt-5 pt-3 border-top border-light">
+        <div class="d-flex align-items-center mb-4 mt-3">
+            <div class="p-2 rounded-3 me-3" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); color: white;">
+                <i class="fa-solid fa-bag-shopping fs-4"></i>
+            </div>
+            <h2 class="fw-bold mb-0" style="color: var(--deep-bg, #2c3e50);">Всі товари</h2>
+        </div>
+
+        <partial name="ProductList" model="Model"></partial>
     </div>
 </div>
-
-<h3 class="fw-bold mb-4" style="color: var(--deep-bg);">Всі товари</h3>
-<partial name="ProductList" model="Model"></partial>

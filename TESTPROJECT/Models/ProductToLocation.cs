@@ -7,7 +7,7 @@
         public int ProductId { get; set; }
         public int LocationId { get; set; }
         public bool IsDeleted { get; set; } = false;
-        public List<Product> products = new List<Product>();
-        public List<Category> categories = new List<Category>();
+        public Product Product { get; set; }
+        public Location Location { get; set; } 
     }
 }

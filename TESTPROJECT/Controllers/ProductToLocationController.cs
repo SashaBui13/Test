@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TESTPROJECT.Data;
 using TESTPROJECT.Models;
+using TESTPROJECT.Models.ViewModels;
+
 
 //using TESTPROJECT.Migrations;
 using YourProjectName.Controllers;
@@ -18,24 +20,42 @@ namespace TESTPROJECT.Controllers
         {
                 _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int locationId)
         {
-            return View();
-        }
-
-        /*public IActionResult Edit(int quantity)
-        {
-            var ptl = _context.ProductsToLocations.ToList();
-            var viewmodel = new ProductToLocation()
+            var ptl = _context.ProductsToLocations.Include(pl => pl.Product).Include(pl => pl.Location).Where(pl=>pl.LocationId == locationId).ToList();
+            if(ptl == null) return NotFound();
+            var viewmodel = new ProductToLocationViewModel
             {
-                viewmodel.Quantity = quantity,
-                if (Quantity != 0) viewmodel.IsDeleted = false
+                productToLocations = ptl,
+            
+
             };
-            return View();
+                return View(viewmodel);
         }
-        */
 
+        public IActionResult Edit(int id)
+        {
 
+            var ptl = _context.ProductsToLocations.Include(pl => pl.Product).Include(pl => pl.Location).Where(pl => pl.Id == id).FirstOrDefault();
+            if (ptl == null) return NotFound();
+            var viewmodel = new ProductToLocationViewModel
+            {
+               ProductToLocation = ptl
+
+            };
+            return View(viewmodel);
+        }
+        [HttpPost]
+        public IActionResult Edit(ProductToLocationViewModel model)
+        {
+            var ptl = _context.ProductsToLocations.Find(model.Id);
+            if(ptl == null) return NotFound();
+            ptl.Quantity = model.Quantity;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
         public IActionResult AutoStartFill()
         {
             var product = _context.Products.ToList();
@@ -63,6 +83,7 @@ namespace TESTPROJECT.Controllers
             };
             return RedirectToAction("Index", "Home");
         }
+
         
 
     }
