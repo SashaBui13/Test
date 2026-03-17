@@ -46,3 +46,29 @@ body {
     padding: 0.8rem 1rem;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
+/* Клас для динамічного фону */
+.dynamic-bg {
+    /* Робимо фон з 3-4 кольорів твого стилю */
+    background: linear-gradient(-45deg, #6f42c1, #8b5cf6, #ffffff, #f8f9fa);
+    /* Збільшуємо розмір фону, щоб було куди рухати */
+    background-size: 400% 400%;
+    /* Запускаємо анімацію: назва, час, плавність, нескінченність */
+    animation: gradientBG 15s ease infinite;
+    /* Щоб фон покривав весь екран (якщо вішаєш на body) */
+    min-height: 100vh;
+}
+
+/* Сама логіка руху */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

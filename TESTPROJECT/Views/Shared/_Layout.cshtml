@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/TESTPROJECT.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/bootstrap-icons/bootstrap-icons.min.css" />
 </head>
-<body>
+<body class="dynamic-bg">
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark navbar-main mb-4">
             <div class="container-fluid">
@@ -22,6 +22,7 @@
                         <li class="nav-item">
 							<a class="nav-link text-white px-3" asp-controller="Home" asp-action="Index">Головна  <i class="bi bi-house"></i></a>
                             <a class="nav-link text-white px-3" asp-controller="ProductToLocation" asp-action="AutoStartFill" fw-bold">Update Products</a>
+                            <a class="dropdown-item py-2" asp-controller="Location" asp-action="Index" fw-bold">Список локацій</a>
                         </li>
                     </ul>
                     <div class="d-flex align-items-center gap-4">
@@ -63,7 +64,6 @@
                                         Підтримка
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                                        <li><a class="dropdown-item py-2" asp-controller="Location" asp-action="Index" fw-bold">Список локацій</a></li>
                                         <li><a class="dropdown-item py-2" href="https://t.me/sashacpp" target="_blank"><i class="bi bi-telegram me-2 text-primary"></i>Telegram</a></li>
                                         <li><a class="dropdown-item py-2" href="https://wa.me/380988114761" target="_blank"><i class="bi bi-whatsapp me-2 text-success"></i>WhatsApp</a></li>
                                     </ul>

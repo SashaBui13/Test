@@ -1,0 +1,52 @@
+﻿@model TESTPROJECT.Models.ViewModels.ProductToLocationViewModel
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0" style="border-radius: 20px; overflow: hidden;">
+
+                <div class="card-header text-white text-center border-0" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); padding: 25px 20px;">
+                    <i class="fa-solid fa-boxes-stacked fs-1 mb-2"></i>
+                    <h3 class="mb-0 fw-bold">Зміна залишків</h3>
+                    <p class="mb-0 text-white-50 small">Оновлення кількості на складі</p>
+                </div>
+
+                <div class="card-body p-4 p-md-5 bg-white">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+
+                        <div class="d-flex flex-column gap-3 mb-4">
+                            <div class="p-3 rounded" style="background-color: #f8f9fa; border-left: 4px solid #6f42c1;">
+                                <small class="text-muted d-block fw-bold mb-1">
+                                    <i class="fa-solid fa-box me-2"></i>Товар
+                                </small>
+                                <span class="fs-5 fw-bold text-dark">@Model.ProductToLocation.Product.Name</span>
+                            </div>
+
+                            <div class="p-3 rounded" style="background-color: #f8f9fa; border-left: 4px solid #20c997;">
+                                <small class="text-muted d-block fw-bold mb-1">
+                                    <i class="fa-solid fa-location-dot me-2"></i>Локація
+                                </small>
+                                <span class="fs-5 fw-bold text-dark">@Model.ProductToLocation.Location.LocationName</span>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="Quantity" type="number" min="0" class="form-control form-control-lg fw-bold text-center" style="font-size: 1.5rem; border-radius: 12px; border: 2px solid #e9ecef;" placeholder="0" required />
+                            <label asp-for="Quantity" class="text-muted">Фактична кількість</label>
+                        </div>
+
+                        <div class="d-flex gap-3 mt-4">
+                            <a asp-controller="Location" asp-action="Index" class="btn btn-light fw-bold w-50 py-3" style="border-radius: 12px; border: 1px solid #dee2e6; color: #6c757d;">
+                                Скасувати
+                            </a>
+                            <button type="submit" class="btn text-white fw-bold w-50 py-3 shadow-sm" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); border: none; border-radius: 12px;">
+                                <i class="fa-solid fa-check me-2"></i>Зберегти
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
