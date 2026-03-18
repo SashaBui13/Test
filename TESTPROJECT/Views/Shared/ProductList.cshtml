@@ -81,16 +81,20 @@
                 </div>
             }
         }
-        <div class="d-flex justify-content-center flex-wrap gap-3 mt-5 mb-5">
-            @for (var Page = 0; Page <= (int)Math.Ceiling((double)Model.Products.Count() / 9); Page++)
-            {
-                <a asp-controller="Home" asp-action="Index" asp-route-Page="@Page" class="btn-show-more">
-                    <i class="fa-solid fa-rotate-right me-2 icon-spin"></i>@(Page+1)
-                </a>
-                
-            }
-        </div>
-        
+        @if (ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" &&
+       ViewContext.RouteData.Values["Action"]?.ToString() == "Index")
+        {
+
+            <div class="d-flex justify-content-center flex-wrap gap-3 mt-5 mb-5">
+
+                @for (var Page = 0; Page <= (int)Math.Ceiling((double)Model.Products.Count() / 9); Page++)
+                {
+                    <a asp-controller="Home" asp-action="Index" asp-route-Page="@Page" class="btn-show-more">
+                        <i class="fa-solid fa-rotate-right me-2 icon-spin"></i>@(Page + 1)
+                    </a>
+                }
+            </div>
+        }
 
         <style>
             .btn-show-more {
