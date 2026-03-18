@@ -5,13 +5,13 @@
     <div class="input-group mb-3">
         <form asp-action="FindProduct" asp-controller="Home" method="post" >
             <input type="text" name="request" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
-            
-        <button typeof="submit" class="btn btn-outline-secondary" type="submit" id="button-addon2">Done</button>
-    </form>
+
+            <button typeof="submit" class="btn btn-outline-secondary" type="submit" id="button-addon2">Done</button>
+        </form>
     </div>
     @if (Model?.Products != null)
     {
-        @foreach (var product in Model.Products)
+        @foreach (var product in Model.Products.Take(9))
         {
             @if (product.IsDeleted == false)
             {
@@ -58,12 +58,12 @@
                         {
                             <div class="card-footer bg-white border-0 d-flex justify-content-between gap-3 px-4 pb-4 mt-auto">
                                 <a asp-controller="Home" asp-action="Edit" asp-route-id="@product.Id"
-                                   class="btn btn-outline-primary btn-custom flex-grow-1">
+                                class="btn btn-outline-primary btn-custom flex-grow-1">
                                     Edit
                                 </a>
                                 <a asp-controller="Home" asp-action="Delete" asp-route-id="@product.Id"
-                                   class="btn btn-outline-danger btn-custom flex-grow-1"
-                                   onclick="return confirm('Видалити цей товар?');">
+                                class="btn btn-outline-danger btn-custom flex-grow-1"
+                                onclick="return confirm('Видалити цей товар?');">
                                     Delete
                                 </a>
                             </div>
@@ -81,5 +81,47 @@
                 </div>
             }
         }
+        <div class="d-flex justify-content-center flex-wrap gap-3 mt-5 mb-5">
+            @for (var Page = 0; Page <= (int)Math.Ceiling((double)Model.Products.Count() / 9); Page++)
+            {
+                <a asp-controller="Home" asp-action="Index" asp-route-Page="@Page" class="btn-show-more">
+                    <i class="fa-solid fa-rotate-right me-2 icon-spin"></i>@(Page+1)
+                </a>
+                
+            }
+        </div>
+        
+
+        <style>
+            .btn-show-more {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #6f42c1, #8b5cf6);
+                color: white !important;
+                text-decoration: none;
+                border-radius: 50px;
+                padding: 14px 45px;
+                font-size: 1.1rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                box-shadow: 0 6px 15px rgba(111, 66, 193, 0.3);
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+
+                .btn-show-more:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 12px 25px rgba(111, 66, 193, 0.5);
+                }
+
+                .btn-show-more .icon-spin {
+                    transition: transform 0.5s ease;
+                }
+
+                .btn-show-more:hover .icon-spin {
+                    transform: rotate(180deg);
+                }
+        </style>
     }
 </div>

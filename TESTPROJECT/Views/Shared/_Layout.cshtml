@@ -20,11 +20,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-							<a class="nav-link text-white px-3" asp-controller="Home" asp-action="Index">Головна  <i class="bi bi-house"></i></a>
-                            <a class="nav-link text-white px-3" asp-controller="ProductToLocation" asp-action="AutoStartFill" fw-bold">Update Products</a>
-                            <a class="dropdown-item py-2" asp-controller="Location" asp-action="Index" fw-bold">Список локацій</a>
+                            <a class="nav-link text-white px-3" asp-controller="Home" asp-action="Index">Головна  <i class="bi bi-house"></i></a>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a class="nav-link text-white px-3" asp-controller="ProductToLocation" asp-action="AutoStartFill" fw-bold">Оновити наявність в магазинах</a>
+                            }
                         </li>
+                        <div><a class="nav-link text-white px-3" asp-controller="Location" asp-action="Index" fw-bold">Список локацій</a> </div>
                     </ul>
+                    
                     <div class="d-flex align-items-center gap-4">
                         <partial name="_LoginPartial" />
                         <li class="nav-item">

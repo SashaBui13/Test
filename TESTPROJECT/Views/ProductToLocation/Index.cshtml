@@ -1,58 +1,122 @@
 ﻿@model TESTPROJECT.Models.ViewModels.ProductToLocationViewModel
-
-<div class="container py-5">
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-10">
-            <div class="card shadow-lg border-0" style="border-radius: 15px;">
-                <div class="card-body text-white text-center" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); border-radius: 15px;">
-                    <i class="fa-solid fa-warehouse fs-1 mb-2"></i>
-                    <h3 class="mb-0 fw-bold py-2">Редагувати Товари На Локаціях</h3>
-                    <p class="mb-0 text-white-50">Управління залишками по всіх магазинах</p>
+@if(User.IsInRole("Admin"))
+{
+    <div class="container py-5">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-10">
+                <div class="card shadow-lg border-0" style="border-radius: 15px;">
+                    <div class="card-body text-white text-center" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); border-radius: 15px;">
+                        <i class="fa-solid fa-warehouse fs-1 mb-2"></i>
+                        <h3 class="mb-0 fw-bold py-2">Редагувати Товари На Локаціях</h3>
+                        <p class="mb-0 text-white-50">Управління залишками по всіх магазинах</p>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="row g-4">
+            @foreach (var ptl in Model.productToLocations)
+            {
+                <div class="col-md-4 col-sm-6">
+                    <div class="card h-100 shadow-sm border-0 d-flex flex-column" style="border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="mb-3">
+                                <span class="badge bg-light text-primary border px-3 py-2 fs-6 rounded-pill" style="color: var(--main-purple) !important; border-color: var(--main-purple) !important;">
+                                    <i class="fa-solid fa-location-dot me-2"></i>@ptl.Location.LocationName
+                                </span>
+                            </div>
+
+                            <h4 class="card-title fw-bold text-dark mb-4">@ptl.Product.Name</h4>
+
+                            <div class="d-flex align-items-center p-3 mt-auto rounded" style="background-color: #f8f9fa; border-left: 4px solid #20c997;">
+                                <div class="me-3 text-muted">
+                                    <i class="fa-solid fa-cubes fs-3"></i>
+                                </div>
+                                <div>
+                                    <small class="text-muted d-block fw-bold mb-1" style="font-size: 0.8rem;">В наявності:</small>
+                                    <span class="fs-4 fw-bold text-dark">@ptl.Quantity <small class="text-muted fs-6 fw-normal">шт.</small></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-white border-0 px-4 pb-4 pt-0 mt-auto">
+                            <a asp-controller="ProductToLocation" asp-action="Edit" asp-route-id="@ptl.Id"
+                            class="btn w-100 fw-bold py-2 shadow-sm text-white"
+                            style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); border-radius: 10px;">
+                                <i class="fa-solid fa-pen-to-square me-2"></i>Змінити кількість
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
     </div>
+}
 
-    <div class="row g-4">
-        @foreach (var ptl in Model.productToLocations)
-        {
-            <div class="col-md-4 col-sm-6">
-                <div class="card h-100 shadow-sm border-0 d-flex flex-column" style="border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-
-                    <div class="card-body p-4 d-flex flex-column">
-                        <div class="mb-3">
-                            <span class="badge bg-light text-primary border px-3 py-2 fs-6 rounded-pill" style="color: var(--main-purple) !important; border-color: var(--main-purple) !important;">
-                                <i class="fa-solid fa-location-dot me-2"></i>@ptl.Location.LocationName
-                            </span>
-                        </div>
-
-                        <h4 class="card-title fw-bold text-dark mb-4">@ptl.Product.Name</h4>
-
-                        <div class="d-flex align-items-center p-3 mt-auto rounded" style="background-color: #f8f9fa; border-left: 4px solid #20c997;">
-                            <div class="me-3 text-muted">
-                                <i class="fa-solid fa-cubes fs-3"></i>
-                            </div>
-                            <div>
-                                <small class="text-muted d-block fw-bold mb-1" style="font-size: 0.8rem;">В наявності:</small>
-                                <span class="fs-4 fw-bold text-dark">@ptl.Quantity <small class="text-muted fs-6 fw-normal">шт.</small></span>
-                            </div>
-                        </div>
+else
+{
+    <div class="container py-5">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-10">
+                <div class="card shadow-lg border-0" style="border-radius: 15px;">
+                    <div class="card-body text-white text-center" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); border-radius: 15px;">
+                        <i class="fa-solid fa-warehouse fs-1 mb-2"></i>
+                        <h3 class="mb-0 fw-bold py-2">Наявність товару в магазині</h3>
                     </div>
-
-                    <div class="card-footer bg-white border-0 px-4 pb-4 pt-0 mt-auto">
-                        <a asp-controller="ProductToLocation" asp-action="Edit" asp-route-id="@ptl.Id"
-                           class="btn w-100 fw-bold py-2 shadow-sm text-white"
-                           style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); border-radius: 10px;">
-                            <i class="fa-solid fa-pen-to-square me-2"></i>Змінити кількість
-                        </a>
-                    </div>
-
                 </div>
             </div>
-        }
-    </div>
-</div>
+        </div>
 
+        <div class="row g-4">
+            @foreach (var ptl in Model.productToLocations)
+            {
+                <div class="col-md-4 col-sm-6">
+                    <div class="card h-100 shadow-sm border-0 d-flex flex-column" style="border-radius: 15px; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="mb-3">
+                                <span class="badge bg-light text-primary border px-3 py-2 fs-6 rounded-pill" style="color: var(--main-purple) !important; border-color: var(--main-purple) !important;">
+                                    <i class="fa-solid fa-location-dot me-2"></i>@ptl.Location.LocationName
+                                </span>
+                            </div>
+
+                            <h4 class="card-title fw-bold text-dark mb-4">@ptl.Product.Name</h4>
+                            @if (ptl.Quantity > 0)
+                            {
+                                <div class="d-flex align-items-center p-3 mt-auto rounded-3" style="background-color: rgba(32, 201, 151, 0.1); border-left: 4px solid #20c997; backdrop-filter: blur(5px);">
+                                    <div class="me-3" style="color: #20c997;">
+                                        <i class="fa-solid fa-cubes fs-3"></i>
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-bold fs-5 mb-0" style="color: #157347;">В наявності</span>
+                                        <small class="text-muted" style="font-size: 0.8rem;">Готово до відправки</small>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex align-items-center p-3 mt-auto rounded-3" style="background-color: rgba(220, 53, 69, 0.08); border-left: 4px solid #dc3545; backdrop-filter: blur(5px);">
+                                    <div class="me-3" style="color: #dc3545; opacity: 0.8;">
+                                        <i class="fa-solid fa-box-open fs-3"></i>
+                                    </div>
+                                    <div>
+                                        <span class="d-block fw-bold fs-5 mb-0" style="color: #dc3545;">Немає в наявності</span>
+                                        <small class="text-muted" style="font-size: 0.8rem;">Очікується поставка</small>
+                                    </div>
+                                </div>
+                            }
+                            
+                        </div>
+
+                    </div>
+                </div>
+                
+            }
+        </div>
+    </div>
+}
 <style>
     .card:hover {
         transform: translateY(-5px);
