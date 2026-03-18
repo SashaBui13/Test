@@ -27,10 +27,10 @@ namespace YourProjectName.Controllers
             return View();
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int Page)
         {
-            
-            var products = _context.Products.ToList();
+            if (Page == null) Page = 0;
+            var products = _context.Products.Skip(Page*9).Take(9).ToList();
             var categories = _context.Categories.ToList();
             var model = new ProductViewModel
             {
@@ -239,5 +239,7 @@ namespace YourProjectName.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+       
     }
 }
