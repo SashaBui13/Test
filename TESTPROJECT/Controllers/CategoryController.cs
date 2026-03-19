@@ -137,7 +137,7 @@ namespace TESTPROJECT.Controllers
             var category = _context.Categories.Find(id);
             if (category == null) return View("Error");
 
-            category.IsDeleted = true;
+            _context.Remove(category);
             _context.SaveChanges();
 
             return RedirectToAction("Index");

@@ -12,8 +12,8 @@ using TESTPROJECT.Data;
 namespace TESTPROJECT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260313080032_InitialCommit")]
-    partial class InitialCommit
+    [Migration("20260319074720_InitalCreate")]
+    partial class InitalCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -281,6 +281,32 @@ namespace TESTPROJECT.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("TESTPROJECT.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CommentText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("TESTPROJECT.Models.Location", b =>
                 {
                     b.Property<int>("LocationId")
@@ -520,6 +546,17 @@ namespace TESTPROJECT.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("TESTPROJECT.Models.Comment", b =>
+                {
+                    b.HasOne("TESTPROJECT.Models.Product", "Product")
+                        .WithMany("Comments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("TESTPROJECT.Models.OrderItem", b =>
                 {
                     b.HasOne("TESTPROJECT.Models.Order", null)
@@ -550,17 +587,21 @@ namespace TESTPROJECT.Migrations
 
             modelBuilder.Entity("TESTPROJECT.Models.ProductToLocation", b =>
                 {
-                    b.HasOne("TESTPROJECT.Models.Location", null)
+                    b.HasOne("TESTPROJECT.Models.Location", "Location")
                         .WithMany("ProductToLocations")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TESTPROJECT.Models.Product", null)
+                    b.HasOne("TESTPROJECT.Models.Product", "Product")
                         .WithMany("ProductToLocations")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TESTPROJECT.Models.Location", b =>
@@ -575,6 +616,8 @@ namespace TESTPROJECT.Migrations
 
             modelBuilder.Entity("TESTPROJECT.Models.Product", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("ProductToLocations");
                 });
 #pragma warning restore 612, 618

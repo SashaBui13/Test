@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
+using Microsoft.CodeAnalysis;
 namespace YourProjectName.Controllers
 {
     public class HomeController : Controller
@@ -59,9 +60,11 @@ namespace YourProjectName.Controllers
         {
             var product = _context.Products.Find(id);
             if (product == null) return NotFound();
-
+            var comments = _context.Comments.Where(pr => pr.ProductId == id).ToList();
+            if(comments == null) return NotFound();
             var viewModel = new ProductViewModel
             {
+                Comments = comments,
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,

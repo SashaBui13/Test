@@ -299,6 +299,8 @@ namespace TESTPROJECT.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Comments");
                 });
 
@@ -541,6 +543,17 @@ namespace TESTPROJECT.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("TESTPROJECT.Models.Comment", b =>
+                {
+                    b.HasOne("TESTPROJECT.Models.Product", "Product")
+                        .WithMany("Comments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("TESTPROJECT.Models.OrderItem", b =>
                 {
                     b.HasOne("TESTPROJECT.Models.Order", null)
@@ -600,6 +613,8 @@ namespace TESTPROJECT.Migrations
 
             modelBuilder.Entity("TESTPROJECT.Models.Product", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("ProductToLocations");
                 });
 #pragma warning restore 612, 618

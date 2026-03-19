@@ -15,6 +15,7 @@ namespace TESTPROJECT.Models.ViewModels
         public string? ImageUrl { get; set; }
         public IFormFile? ImageFile { get; set; }
         public string LongDescription { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
 
