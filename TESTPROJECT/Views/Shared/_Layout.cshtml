@@ -30,7 +30,7 @@
                     <div class="d-flex align-items-center gap-4">
                         <partial name="_LoginPartial" />
                         <li class="nav-item">
-                            <a class="nav-link text-white px-3" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart3 me-2"></i> Ваш кошик(@Model.Items.Count())</a>
+                            <a class="nav-link text-white px-3" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart3 me-2"></i></a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
