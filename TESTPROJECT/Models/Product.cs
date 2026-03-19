@@ -17,6 +17,11 @@ namespace TESTPROJECT.Models
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public List<ProductToLocation> ProductToLocations { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public Product()
+        {
+            Comments = new List<Comment>();
+        }
 
     }
 }
