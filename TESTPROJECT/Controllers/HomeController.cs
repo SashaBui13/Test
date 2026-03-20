@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
 using Microsoft.CodeAnalysis;
+using System.ComponentModel;
+
 namespace YourProjectName.Controllers
 {
     public class HomeController : Controller
@@ -100,6 +102,38 @@ namespace YourProjectName.Controllers
             var model = new ProductViewModel { Categories = allCategories, Products = allProducts };
             return View(model);
         }
+
+        public IActionResult RandomProducts()
+        {
+            string[] Names = new string[] {"Intel Pentium", "Chair", "Table", "Keyboard"};
+            string Descriptions = "-";
+            int[] Prices = new int[] { 1200, 600, 2350, 660, 4500, 3000 };
+            string ImageUrls = "/images/products/507dd06d-ac5e-4418-9812-d794af4d8f3d_protsessor_intel_core_i7-12700_s-1700_4_9ghz_25mb_tray_cm8071504555019~1000~1000.webp";
+            string LongDescriptions = "-";
+            int[] CategoryIds = new int[] { 3, 4, 5 };
+            for (int i = 0; i < 100; i++)
+            {
+                int randomIndex = Random.Shared.Next(Names.Length);
+                var randomName = Names[randomIndex];
+                randomIndex = Random.Shared.Next(Prices.Length);
+                var randomPrice = Prices[randomIndex];
+                randomIndex = Random.Shared.Next(CategoryIds.Length);
+                var randomCategory = CategoryIds[randomIndex];
+                var product = new Product
+                {
+                    Name = randomName,
+                    Price = randomPrice,
+                    Description = Descriptions,
+                    CategoryId = randomCategory,
+                    ImageUrl = ImageUrls,
+                    LongDescription = LongDescriptions
+                };
+                _context.Products.Add(product);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");  
+        }
+
 
        [HttpPost]
        [Authorize(Roles = "Admin")]
