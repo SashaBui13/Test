@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Sasha\\Desktop\\TESTPROJECT\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{06828B94-4EDE-4BEE-9D62-5F37DD9847B7}|TESTPROJECT\\TESTPROJECT.csproj|c:\\users\\sasha\\desktop\\testproject\\testproject\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06828B94-4EDE-4BEE-9D62-5F37DD9847B7}|TESTPROJECT\\TESTPROJECT.csproj|solutionrelative:testproject\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06828B94-4EDE-4BEE-9D62-5F37DD9847B7}|TESTPROJECT\\TESTPROJECT.csproj|c:\\users\\sasha\\desktop\\testproject\\testproject\\views\\home\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{06828B94-4EDE-4BEE-9D62-5F37DD9847B7}|TESTPROJECT\\TESTPROJECT.csproj|solutionrelative:testproject\\views\\home\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06828B94-4EDE-4BEE-9D62-5F37DD9847B7}|TESTPROJECT\\TESTPROJECT.csproj|c:\\users\\sasha\\desktop\\testproject\\testproject\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06828B94-4EDE-4BEE-9D62-5F37DD9847B7}|TESTPROJECT\\TESTPROJECT.csproj|solutionrelative:testproject\\controllers\\commentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06828B94-4EDE-4BEE-9D62-5F37DD9847B7}|TESTPROJECT\\TESTPROJECT.csproj|c:\\users\\sasha\\desktop\\testproject\\testproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -66,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -122,26 +122,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Sasha\\Desktop\\TESTPROJECT\\TESTPROJECT\\Views\\Home\\Details.cshtml",
               "RelativeDocumentMoniker": "TESTPROJECT\\Views\\Home\\Details.cshtml",
               "ToolTip": "C:\\Users\\Sasha\\Desktop\\TESTPROJECT\\TESTPROJECT\\Views\\Home\\Details.cshtml",
               "RelativeToolTip": "TESTPROJECT\\Views\\Home\\Details.cshtml",
-              "ViewState": "AgIAAKwAAAAAAAAAAAAAAL8AAABRAAAAAAAAAA==",
+              "ViewState": "AgIAAKkAAAAAAAAAAAAAAMwAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-03-19T07:16:58.516Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "CommentController.cs",
               "DocumentMoniker": "C:\\Users\\Sasha\\Desktop\\TESTPROJECT\\TESTPROJECT\\Controllers\\CommentController.cs",
               "RelativeDocumentMoniker": "TESTPROJECT\\Controllers\\CommentController.cs",
-              "ToolTip": "C:\\Users\\Sasha\\Desktop\\TESTPROJECT\\TESTPROJECT\\Controllers\\CommentController.cs*",
-              "RelativeToolTip": "TESTPROJECT\\Controllers\\CommentController.cs*",
-              "ViewState": "AgIAABcAAAAAAAAAAAAnwCsAAABVAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Sasha\\Desktop\\TESTPROJECT\\TESTPROJECT\\Controllers\\CommentController.cs",
+              "RelativeToolTip": "TESTPROJECT\\Controllers\\CommentController.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwBUAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-19T07:10:18.81Z",
               "EditorCaption": ""
